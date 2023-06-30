@@ -146,7 +146,11 @@ const Navbar = () => {
     }
   `
 
-  const Burger = styled.div``
+  const Burger = styled.div`
+    @media ${deviceBreakpoints.desktopL} {
+      display: none;
+    }
+  `
 
   const LinkList = <ul>
     <li>
