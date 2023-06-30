@@ -10,8 +10,6 @@ const NewsCard = ({ data }) => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    max-width: 15vw;
-    max-height: 200px;
     padding: 6px;
     border: 1px solid #999999;
     border-radius: 4px;

@@ -2,6 +2,7 @@ import Root from "./Components/Root"
 import NewsGrid from "./Components/NewsGrid"
 import NewsDetail from "./Components/NewsDetail"
 import Contact from "./Components/Contact"
+import Favorites from "./Components/Favorites"
 
 const routes = {
   path: "/",
@@ -42,6 +43,10 @@ const routes = {
     {
       path: 'contacto',
       element: <Contact/>
+    },
+    {
+      path: 'favoritos',
+      element: <Favorites/>
     }
   ]
 }

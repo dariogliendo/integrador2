@@ -1,9 +1,9 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import NewsCard from './NewsCard'
-import { Link } from 'react-router-dom'
+import NewsCard from './NewsCard';
 import { useNavigate } from 'react-router-dom'
+import deviceBreakpoints from '../utils/mediaQueryBreakpoints'
 
 const NewsGrid = ({ section }) => {
   const [news, setNews] = useState([])
@@ -52,7 +52,9 @@ const NewsGrid = ({ section }) => {
     <NewsCard data={article} key={ix} />
   )
 
-
+  const MainWrapper = styled.div`
+    width: 100%;
+  `
 
   const Container = styled.div`
     display: grid;
@@ -61,6 +63,11 @@ const NewsGrid = ({ section }) => {
     width:100%;
     box-sizing: border-box;
     justify-items: center;
+
+    @media ${deviceBreakpoints.mobileM} {
+      grid-template-columns: 1fr;
+      padding: 15px;
+    }
  `
 
   const MainArticle = styled.div`
@@ -69,6 +76,7 @@ const NewsGrid = ({ section }) => {
     background-image: url(${mainArticle.image});
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     height: 70vh;
     display: flex;
     flex-direction: column;
@@ -76,7 +84,6 @@ const NewsGrid = ({ section }) => {
     padding: 20px 0;
     box-sizing: border-box;
     width: 100%;
-    white-space: pre;
     overflow: hidden;
     line-break: normal;
     cursor: pointer;
@@ -92,7 +99,7 @@ const NewsGrid = ({ section }) => {
   `
 
   return (
-    <div>
+    <MainWrapper>
       <h1>Noticias</h1>
       <MainArticle onClick={() => goToMainArticle(`/article/${encodeURIComponent(mainArticle.link)}`)}>
         <h1>{mainArticle.title}</h1>
@@ -100,7 +107,7 @@ const NewsGrid = ({ section }) => {
       <Container>
         {newsList}
       </Container>
-    </div>
+    </MainWrapper>
   )
 }
 
