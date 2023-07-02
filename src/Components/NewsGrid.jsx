@@ -11,24 +11,24 @@ const NewsGrid = ({ section }) => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    async function fetchNews(section) {
+      try {
+        if (!section) return console.error('No se pudieron obtener noticias ya que no se indicó la sección')
+        const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(`https://www.ole.com.ar/rss/${section}`))
+        const text = await res.text()
+        const feed = new window.DOMParser().parseFromString(text, "text/xml")
+        if (!feed) return console.error('Ocurrió un error. No se pudieron obtener las noticias')
+        const parsedNews = parseFeed(feed)
+        const firstArticle = parsedNews.splice(0, 1)
+        setNews(parsedNews)
+        setMainArticle(firstArticle[0])
+      } catch (error) {
+        console.error(error)
+      }
+    }
     fetchNews(section)
   }, [section])
 
-  async function fetchNews(section) {
-    try {
-      if (!section) return console.error('No se pudieron obtener noticias ya que no se indicó la sección')
-      const res = await fetch(`https://www.ole.com.ar/rss/${section}`)
-      const text = await res.text()
-      const feed = new window.DOMParser().parseFromString(text, "text/xml")
-      if (!feed) return console.error('Ocurrió un error. No se pudieron obtener las noticias')
-      const parsedNews = parseFeed(feed)
-      const firstArticle = parsedNews.splice(0, 1)
-      setNews(parsedNews)
-      setMainArticle(firstArticle[0])
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   function parseFeed(feed) {
     const feedItems = feed.querySelectorAll('item')

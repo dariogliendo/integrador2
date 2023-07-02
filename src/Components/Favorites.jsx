@@ -11,7 +11,7 @@ const Favorites = () => {
     async function getFavorites() {
       const articleArr = []
       for (const favorite of favorites) {
-        const data = await fetch(favorite)
+        const data = await fetch('https://corsproxy.io/?' + encodeURIComponent(favorite))
         const text = await data.text()
         const element = new DOMParser().parseFromString(text, 'text/html')
         const article = {

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 
-const NewsDetail = ({ }) => {
+const NewsDetail = () => {
   const [paragraphs, setParagraphs] = useState([])
   const [imageData, setImageData] = useState({})
   const [subtitle, setSubtitle] = useState('')
@@ -14,13 +14,13 @@ const NewsDetail = ({ }) => {
   const [title, setTitle] = useState('')
   const { url } = useParams()
   const lsItem = localStorage.getItem('favorites')
-  const favorites = lsItem && JSON.parse(lsItem) || []
+  const favorites = (lsItem && JSON.parse(lsItem)) || []
 
   useEffect(() => {
     const fetchElement = async () => {
       try {
         if (!url) return
-        const res = await fetch(decodeURIComponent(url))
+        const res = await fetch('https://corsproxy.io/?' + url)
         const text = await res.text()
         const articleDocument = new DOMParser().parseFromString(text, 'text/html')
         const body = articleDocument.querySelector('article#storyBody')
@@ -56,8 +56,8 @@ const NewsDetail = ({ }) => {
   }
 
   function renderParagraphs(paragraphs) {
-    return paragraphs.map(paragraph =>
-      <p>
+    return paragraphs.map((paragraph, ix) =>
+      <p key={ix}>
         {paragraph}
       </p>
     )
